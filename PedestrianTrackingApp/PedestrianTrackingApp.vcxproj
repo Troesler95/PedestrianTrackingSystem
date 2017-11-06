@@ -116,6 +116,9 @@
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
     </ClCompile>
+    <Link>
+      <ShowProgress>LinkVerbose</ShowProgress>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -159,15 +162,6 @@
     <None Include="PedestrianTrackingApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\LockScreenLogo.scale-200.png" />
-    <Image Include="Assets\SplashScreen.scale-200.png" />
-    <Image Include="Assets\Square150x150Logo.scale-200.png" />
-    <Image Include="Assets\Square44x44Logo.scale-200.png" />
-    <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Image Include="Assets\StoreLogo.png" />
-    <Image Include="Assets\Wide310x150Logo.scale-200.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="App.xaml.cpp">
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
@@ -185,10 +179,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PTAImageProcessing\PTAImageProcessing.vcxproj">
-      <Project>{d237b5ee-f846-48e3-acd7-ccfe2a2341eb}</Project>
+      <Project>{c71e5e51-b945-486f-a534-bf4661b1938a}</Project>
     </ProjectReference>
     <ProjectReference Include="..\PTATracking\PTATracking.vcxproj">
-      <Project>{9b0e36f0-36d2-47f6-9e15-fbad3d54dba6}</Project>
+      <Project>{48ddaadb-fb0d-420e-a4e2-06b0d6a600a4}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

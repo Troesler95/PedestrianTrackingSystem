@@ -2,7 +2,7 @@
 // App.xaml.cpp
 // Implementation of the App class.
 //
-
+#pragma comment(lib, "MSCOREE.lib")
 #include "pch.h"
 #include "MainPage.xaml.h"
 

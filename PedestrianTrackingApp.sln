@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PedestrianTrackingApp", "PedestrianTrackingApp\PedestrianTrackingApp.vcxproj", "{33E7F2AF-5474-4F49-8B50-454AA463E80F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PTAImageProcessing", "PTAImageProcessing\PTAImageProcessing.vcxproj", "{C71E5E51-B945-486F-A534-BF4661B1938A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PTATracking", "PTATracking\PTATracking.vcxproj", "{48DDAADB-FB0D-420E-A4E2-06B0D6A600A4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImageProcTestApp", "ImageProcTestApp\ImageProcTestApp.vcxproj", "{4B05AE1D-5549-42A2-A0D6-DC3763AB7E37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,8 +28,6 @@ Global
 		{33E7F2AF-5474-4F49-8B50-454AA463E80F}.Debug|x64.Build.0 = Debug|x64
 		{33E7F2AF-5474-4F49-8B50-454AA463E80F}.Debug|x64.Deploy.0 = Debug|x64
 		{33E7F2AF-5474-4F49-8B50-454AA463E80F}.Debug|x86.ActiveCfg = Debug|Win32
-		{33E7F2AF-5474-4F49-8B50-454AA463E80F}.Debug|x86.Build.0 = Debug|Win32
-		{33E7F2AF-5474-4F49-8B50-454AA463E80F}.Debug|x86.Deploy.0 = Debug|Win32
 		{33E7F2AF-5474-4F49-8B50-454AA463E80F}.Release|ARM.ActiveCfg = Release|ARM
 		{33E7F2AF-5474-4F49-8B50-454AA463E80F}.Release|ARM.Build.0 = Release|ARM
 		{33E7F2AF-5474-4F49-8B50-454AA463E80F}.Release|ARM.Deploy.0 = Release|ARM
@@ -42,7 +42,6 @@ Global
 		{C71E5E51-B945-486F-A534-BF4661B1938A}.Debug|x64.ActiveCfg = Debug|x64
 		{C71E5E51-B945-486F-A534-BF4661B1938A}.Debug|x64.Build.0 = Debug|x64
 		{C71E5E51-B945-486F-A534-BF4661B1938A}.Debug|x86.ActiveCfg = Debug|Win32
-		{C71E5E51-B945-486F-A534-BF4661B1938A}.Debug|x86.Build.0 = Debug|Win32
 		{C71E5E51-B945-486F-A534-BF4661B1938A}.Release|ARM.ActiveCfg = Release|ARM
 		{C71E5E51-B945-486F-A534-BF4661B1938A}.Release|ARM.Build.0 = Release|ARM
 		{C71E5E51-B945-486F-A534-BF4661B1938A}.Release|x64.ActiveCfg = Release|x64
@@ -54,15 +53,27 @@ Global
 		{48DDAADB-FB0D-420E-A4E2-06B0D6A600A4}.Debug|x64.ActiveCfg = Debug|x64
 		{48DDAADB-FB0D-420E-A4E2-06B0D6A600A4}.Debug|x64.Build.0 = Debug|x64
 		{48DDAADB-FB0D-420E-A4E2-06B0D6A600A4}.Debug|x86.ActiveCfg = Debug|Win32
-		{48DDAADB-FB0D-420E-A4E2-06B0D6A600A4}.Debug|x86.Build.0 = Debug|Win32
 		{48DDAADB-FB0D-420E-A4E2-06B0D6A600A4}.Release|ARM.ActiveCfg = Release|ARM
 		{48DDAADB-FB0D-420E-A4E2-06B0D6A600A4}.Release|ARM.Build.0 = Release|ARM
 		{48DDAADB-FB0D-420E-A4E2-06B0D6A600A4}.Release|x64.ActiveCfg = Release|x64
 		{48DDAADB-FB0D-420E-A4E2-06B0D6A600A4}.Release|x64.Build.0 = Release|x64
 		{48DDAADB-FB0D-420E-A4E2-06B0D6A600A4}.Release|x86.ActiveCfg = Release|Win32
 		{48DDAADB-FB0D-420E-A4E2-06B0D6A600A4}.Release|x86.Build.0 = Release|Win32
+		{4B05AE1D-5549-42A2-A0D6-DC3763AB7E37}.Debug|ARM.ActiveCfg = Debug|Win32
+		{4B05AE1D-5549-42A2-A0D6-DC3763AB7E37}.Debug|x64.ActiveCfg = Debug|x64
+		{4B05AE1D-5549-42A2-A0D6-DC3763AB7E37}.Debug|x64.Build.0 = Debug|x64
+		{4B05AE1D-5549-42A2-A0D6-DC3763AB7E37}.Debug|x86.ActiveCfg = Debug|Win32
+		{4B05AE1D-5549-42A2-A0D6-DC3763AB7E37}.Debug|x86.Build.0 = Debug|Win32
+		{4B05AE1D-5549-42A2-A0D6-DC3763AB7E37}.Release|ARM.ActiveCfg = Release|Win32
+		{4B05AE1D-5549-42A2-A0D6-DC3763AB7E37}.Release|x64.ActiveCfg = Release|x64
+		{4B05AE1D-5549-42A2-A0D6-DC3763AB7E37}.Release|x64.Build.0 = Release|x64
+		{4B05AE1D-5549-42A2-A0D6-DC3763AB7E37}.Release|x86.ActiveCfg = Release|Win32
+		{4B05AE1D-5549-42A2-A0D6-DC3763AB7E37}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {32D8DF6D-1328-4781-9BC8-F6E096AEE869}
 	EndGlobalSection
 EndGlobal

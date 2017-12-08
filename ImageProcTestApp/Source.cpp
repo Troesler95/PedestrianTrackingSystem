@@ -2,9 +2,11 @@
 #include <iostream>
 #include <vector>
 #include <opencv2/core.hpp>
+#include <opencv2/dnn.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/imgproc.hpp>
+#include <opencv2/ml.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/video/background_segm.hpp>
 #include <yaml-cpp/yaml.h>
@@ -31,6 +33,7 @@ TruthFrameMap ParseImagePlaneDataset(std::string);
 // Background subtraction
 Ptr<BackgroundSubtractorMOG2> GetAndTrainBkgSubtractor(size_t trainIms = 33, size_t thresh = 150, bool shadows = false);
 void FindPeopleBkgSub(Ptr<BackgroundSubtractorMOG2>, TruthFrameMap*);
+static void detectAndDraw(const HOGDescriptor&hog, Mat&img);
 
 int main(void)
 {
@@ -43,13 +46,82 @@ int main(void)
 	cv::String filename = "";
 	cv::String imgTruth = labDir + "ground_truth_image_plane.yaml";
 
-	TruthFrameMap truthBoxes = ParseImagePlaneDataset(imgTruth);
+	auto ReducePointSize = [=](cv::Point point) -> cv::Point {
+		return Point(point.x / 2, point.y / 2);
+	};
 
-	Ptr<BackgroundSubtractorMOG2> bkgSub = GetAndTrainBkgSubtractor();
-	FindPeopleBkgSub(bkgSub, &truthBoxes);
+	//TruthFrameMap truthBoxes = ParseImagePlaneDataset(imgTruth);
+
+	//Ptr<BackgroundSubtractorMOG2> bkgSub = GetAndTrainBkgSubtractor();
+	/*FindPeopleBkgSub(bkgSub, &truthBoxes);*/
+
+
+	//HOGDescriptor hog;
+	cv::HOGDescriptor hog(cv::Size(48, 96), cv::Size(16, 16), cv::Size(8, 8), cv::Size(8, 8),
+		9, 1, -1, cv::HOGDescriptor::L2Hys, 0.2, true, cv::HOGDescriptor::DEFAULT_NLEVELS);
+	hog.setSVMDetector(HOGDescriptor::getDaimlerPeopleDetector());
+	hog.winSize = Size(48, 96);
+	namedWindow("people detector", cv::WINDOW_AUTOSIZE);
+
+	// play the remaining images like a video
+	for (size_t i = 34; i < 950; ++i)
+	{
+		filename = imFilePrefix + GetStringFromNum(i) + ".png";
+		inImg = imread(filename, IMREAD_COLOR);
+		if (inImg.data == NULL)
+		{
+			cout << "ERROR: Unable to open \"" << filename << "\"!" << endl;
+			continue;
+		}
+		resize(inImg, inImg, Size(), 0.45, 0.45, INTER_LINEAR);
+		detectAndDraw(hog, inImg);
+		imshow("people detector", inImg);
+		waitKey(1);
+	}
 
 	cv::waitKey();
 	return 0;
+}
+
+/*Adapted function from GitHub example */
+static void detectAndDraw(const HOGDescriptor &hog, Mat &img)
+{
+	vector<Rect> found, found_filtered;
+	//double t = (double)getTickCount();
+	// Run the detector with default parameters. to get a higher hit-rate
+	// (and more false alarms, respectively), decrease the hitThreshold and
+	// groupThreshold (set groupThreshold to 0 to turn off the grouping completely).
+	//hog.detectMultiScale(img, found, 1.0, Size(8, 8), Size(32, 32), 1.05, 2, false);
+	hog.detectMultiScale(img, found, 0.85, cv::Size(), cv::Size(), 1.05, 2.5, false);
+	//t = (double)getTickCount() - t;
+	//cout << "detection time = " << (t*1000. / cv::getTickFrequency()) << " ms" << endl;
+
+	for (size_t i = 0; i < found.size(); i++)
+	{
+		Rect r = found[i];
+
+		size_t j;
+		// Do not add small detections inside a bigger detection.
+		for (j = 0; j < found.size(); j++)
+			if (j != i && (r & found[j]) == r)
+				break;
+
+		if (j == found.size())
+			found_filtered.push_back(r);
+	}
+
+	for (size_t i = 0; i < found_filtered.size(); i++)
+	{
+		Rect r = found_filtered[i];
+
+		// The HOG detector returns slightly larger rectangles than the real objects,
+		// so we slightly shrink the rectangles to get a nicer output.
+		/*r.x += cvRound(r.width*0.1);
+		r.width = cvRound(r.width*0.8);
+		r.y += cvRound(r.height*0.07);
+		r.height = cvRound(r.height*0.8);*/
+		rectangle(img, r.tl(), r.br(), cv::Scalar(0, 255, 0), 2);
+	}
 }
 
 /** ParseImagePlaneDataset
@@ -248,4 +320,39 @@ void FindPeopleBkgSub(Ptr<BackgroundSubtractorMOG2> bkgSubtractor, TruthFrameMap
 	}
 	// destroy them all
 	destroyAllWindows();
+}
+
+void AhmetSVM()
+{
+	/*AHMET'S SVM CODE*/
+	int num_files = 17; // # of rows of the training matrix
+	int img_area = 512 * 424; //# of columns of the training matrix
+
+	Mat training_mat(num_files, img_area, CV_32FC1); //TODO: Check for CV_32FC1 and update here,
+	Mat labels(num_files, 1, CV_32FC1);
+	Mat train_labels;
+	Mat img_mat;
+	int ii = 0; //Current column of training_mat
+
+	cv::setBreakOnError(true); //Can be commented during the run.
+
+							   //I just tried to read images from a folder. In my case there was 17 images. Thats why num_files = 17.
+	for (int i = 0; i < 16; i++)
+	{
+		img_mat = imread("A-FILE-PATH-HERE", IMREAD_COLOR);
+		Mat float_data;
+		img_mat.convertTo(float_data, CV_32FC1);
+		training_mat.push_back(float_data);
+		train_labels.push_back(labels);
+	}
+
+	//Set up SVM's parameters. TODO: Play with parameters for better results.
+	Ptr<ml::SVM> svm = ml::SVM::create();
+	svm->setType(ml::SVM::C_SVC);
+	svm->setKernel(ml::SVM::LINEAR);
+	svm->setTermCriteria(TermCriteria(TermCriteria::MAX_ITER, 100, 1e-6));
+
+	//This is where I'm stuck. 
+	Ptr<ml::TrainData> td = ml::TrainData::create(img_mat, ml::ROW_SAMPLE, train_labels);
+	svm->train(td);
 }

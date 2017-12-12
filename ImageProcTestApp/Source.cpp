@@ -73,6 +73,7 @@ int main(void)
 			cout << "ERROR: Unable to open \"" << filename << "\"!" << endl;
 			continue;
 		}
+		cvtColor(inImg, inImg, CV_RGB2GRAY);
 		resize(inImg, inImg, Size(), 0.45, 0.45, INTER_LINEAR);
 		detectAndDraw(hog, inImg);
 		imshow("people detector", inImg);

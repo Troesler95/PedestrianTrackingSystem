@@ -32,6 +32,7 @@ namespace PTA_ImageProcessing
 	{
 		std::vector<cv::Rect> found, found_filtered;
 		
+		cv::cvtColor(inImg, inImg, cv::COLOR_RGB2GRAY);
 		cv::resize(inImg, inImg, cv::Size(), 0.45, 0.45, cv::INTER_LINEAR);
 
 		if (_daimlerFlag)

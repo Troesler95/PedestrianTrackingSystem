@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "PTATracking.h"
 
+<<<<<<< HEAD
 // TrackingController class member function implementations
 
 
@@ -243,3 +244,5 @@ bool FramesController::previousFrameExists()
 {
 	return previous != nullptr ? true : false;
 }
+=======
+>>>>>>> master
